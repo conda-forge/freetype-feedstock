@@ -13,7 +13,7 @@ source:
         - winshared.patch  # [win]
 
 build:
-    number: 1
+    number: 2
     features:
         - vc9  # [win and py27]
         - vc10  # [win and py34]
@@ -24,10 +24,10 @@ requirements:
         - python  # [win]
         - cmake  # [win]
         - zlib 1.2.*
-        - libpng >=1.6.21,<1.7
+        - libpng >=1.6.23,<1.7
     run:
         - zlib 1.2.*
-        - libpng >=1.6.21,<1.7
+        - libpng >=1.6.23,<1.7
 
 test:
     commands:
