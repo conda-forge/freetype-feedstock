@@ -1,18 +1,18 @@
-{% set version = "2.10.0" %}
+{% set version = "2.10.1" %}
 
 package:
   name: freetype
   version: {{ version }}
 
 source:
-  url: http://download.savannah.gnu.org/releases/freetype/freetype-{{ version }}.tar.bz2
-  sha256: fccc62928c65192fff6c98847233b28eb7ce05f12d2fea3f6cc90e8b4e5fbe06
+  url: http://download.savannah.gnu.org/releases/freetype/freetype-{{ version }}.tar.gz
+  sha256: 3a60d391fd579440561bf0e7f31af2222bc610ad6ce4d9d7bd2165bca8669110
   patches:
     - 0003-Install-the-pkg-config-file-on-Windows-too.patch
     - 0004-Fix-the-CMake-versioning-information.patch
 
 build:
-  number: 1
+  number: 0
   run_exports:
     # has removed symbols at minor versions, but only very rarely.  Go with major.
     #    https://abi-laboratory.pro/tracker/timeline/freetype/
