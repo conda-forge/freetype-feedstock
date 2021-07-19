@@ -1,4 +1,4 @@
-{% set version = "2.10.4" %}
+{% set version = "2.11.0" %}
 
 package:
   name: freetype
@@ -6,12 +6,12 @@ package:
 
 source:
   url: http://download.savannah.gnu.org/releases/freetype/freetype-{{ version }}.tar.gz
-  sha256: 5eab795ebb23ac77001cfb68b7d4d50b5d6c7469247b0b01b2c953269f658dac
+  sha256: a45c6b403413abd5706f3582f04c8339d26397c4304b78fa552f2215df64101f
   patches:
     - 0003-Install-the-pkg-config-file-on-Windows-too.patch
 
 build:
-  number: 1
+  number: 0
   run_exports:
     # has removed symbols at minor versions, but only very rarely.  Go with major.
     #  https://abi-laboratory.pro/tracker/timeline/freetype/
