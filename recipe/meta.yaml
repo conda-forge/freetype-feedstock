@@ -9,7 +9,7 @@ source:
   sha256: efe71fd4b8246f1b0b1b9bfca13cfff1c9ad85930340c27df469733bbb620938
 
 build:
-  number: 0
+  number: 1
   run_exports:
     # has removed symbols at minor versions, but only very rarely.  Go with major.
     #  https://abi-laboratory.pro/tracker/timeline/freetype/
