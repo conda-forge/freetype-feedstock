@@ -8,6 +8,8 @@ package:
 source:
   git_url: https://github.com/freetype/freetype
   git_tag: VER-{{ major }}-{{ minor }}-{{ patch }}
+  # url: https://github.com/freetype/freetype/archive/refs/tags/VER-{{ major }}-{{ minor }}-{{ patch }}.tar.gz
+  # sha256: a683f1091aee95d2deaca9292d976f87415610b8ae1ea186abeebcb08e83ab12
 
 build:
   number: 0
@@ -18,11 +20,14 @@ build:
 
 requirements:
   build:
-    - libtool  # [unix]
     - {{ compiler('c') }}
+    - autoconf  # [not win]
+    - automake  # [not win]
     - cmake  # [win]
+    - libtool  # [not win]
     - make  # [not win]
     - ninja  # [win]
+    - git  # [not win]
   host:
     - libpng
     - zlib
