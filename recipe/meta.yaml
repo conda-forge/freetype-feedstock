@@ -1,5 +1,5 @@
 {% set version = "2.13.0" %}
-{% major, minor, patch = version.split(".") %}
+{% set major, minor, patch = version.split(".") %}
 
 package:
   name: freetype
