@@ -1,7 +1,7 @@
 #!/bin/bash
 
-sh autogen.sh
-
+# LIBTOOLIZE setting is required to workaround missing glibtoolize on OS X:
+LIBTOOLIZE=libtoolize sh ./autogen.sh
 
 # Get an updated config.sub and config.guess
 cp $BUILD_PREFIX/share/libtool/build-aux/config.* ./builds/unix
