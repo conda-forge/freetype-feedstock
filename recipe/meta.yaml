@@ -8,6 +8,7 @@ package:
 source:
   git_url: https://github.com/freetype/freetype
   git_tag: VER-{{ major }}-{{ minor }}-{{ patch }}
+  # Cannot use the archive b/c we need to fecth some git submodules.
   # url: https://github.com/freetype/freetype/archive/refs/tags/VER-{{ major }}-{{ minor }}-{{ patch }}.tar.gz
   # sha256: a683f1091aee95d2deaca9292d976f87415610b8ae1ea186abeebcb08e83ab12
 
