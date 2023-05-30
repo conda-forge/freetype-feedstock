@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://github.com/freetype/freetype
+  git_url: https://github.com/freetype/freetype
   git_tag: VER-{{ major }}-{{ minor }}-{{ patch }}
 
 build:
