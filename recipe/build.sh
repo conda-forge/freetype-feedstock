@@ -1,4 +1,8 @@
 #!/bin/bash
+
+sh autogen.sh
+
+
 # Get an updated config.sub and config.guess
 cp $BUILD_PREFIX/share/libtool/build-aux/config.* ./builds/unix
 
