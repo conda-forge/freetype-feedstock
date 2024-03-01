@@ -1,7 +1,9 @@
 {% set version = "2.12.1" %}
+{% set so_name = "6.18.3" %}
+{% set so_name_major = so_name.split('.')[0] %}
 
 package:
-  name: freetype
+  name: freetype-split
   version: {{ version }}
 
 source:
@@ -11,7 +13,7 @@ source:
     - CVE-2022-37434.patch
 
 build:
-  number: 2
+  number: 3
   run_exports:
     # has removed symbols at minor versions, but only very rarely.  Go with major.
     #  https://abi-laboratory.pro/tracker/timeline/freetype/
@@ -28,10 +30,69 @@ requirements:
     - libpng
     - zlib
 
-test:
-  commands:
-    - ${PREFIX}/bin/freetype-config --version  # [not win]
-    - if exist %LIBRARY_BIN%\freetype.dll (exit 0) else (exit 1)  # [win]
+outputs:
+
+  # Everything needed to build against libfreetype (scripts in bin are for build config)
+  - name: freetype
+    script: install.py
+    build:
+      run_exports:
+        - {{ pin_subpackage('libfreetype' ~ so_name_major) }}
+    requirements:
+      host:
+        - {{ pin_subpackage('libfreetype' ~ so_name_major, exact=True) }}        # [unix]
+      run:
+        - {{ pin_subpackage('libfreetype' ~ so_name_major, exact=True) }}        # [unix]
+    test:
+      commands:
+        - ${PREFIX}/bin/freetype-config --version  # [not win]
+      # Need these things
+        - test -f ${PREFIX}/lib/libfreetype{{ SHLIB_EXT }}                       # [unix]
+        - test -f ${PREFIX}/lib/libfreetype.{{ so_name_major }}{{ SHLIB_EXT }}   # [osx]
+        - test -f ${PREFIX}/lib/libfreetype{{ SHLIB_EXT }}.{{ so_name_major }}   # [linux]
+        - test -f ${PREFIX}/lib/libfreetype{{ SHLIB_EXT }}.{{ so_name }}         # [linux]
+        - if not exist %PREFIX%\\Library\\lib\\freetype.lib exit 1               # [win]
+        - test -f ${PREFIX}/include/freetype2/freetype/freetype.h                             # [unix]
+        - if not exist %PREFIX%\\Library\\include\\freetype2\\freetype\\freetype.h exit 1      # [win]
+        - test -f ${PREFIX}/lib/pkgconfig/freetype2.pc                            # [unix]
+        - if not exist %PREFIX%\\Library\\lib\\pkgconfig\\freetype2.pc exit 1     # [win]
+        - if not exist %PREFIX%\\Library\\lib\\cmake\\freetype\\freetype-config.cmake exit 1     # [win]
+        - test -f ${PREFIX}/bin/freetype-config                               # [unix]
+      # Exclude these things
+        - test ! -f ${PREFIX}/lib/libfreetype.a                               # [unix]
+        - if exist %PREFIX%\\Library\\bin\\freetype.dll exit 1                # [win]
+
+  # Only what's needed for run_exports downstream
+  - name: libfreetype{{ so_name_major }}
+    script: install.py
+    build:
+      run_exports:
+        - {{ pin_subpackage('libfreetype' ~ so_name_major) }}
+    requirements:
+      build:
+        - {{ compiler('c') }}
+      host:
+        - libpng
+        - zlib
+      run:
+        - {{ pin_subpackage('_libfreetype_api', max_pin='x.x.x') }}              # [win]
+    test:
+      commands:
+      # Need these things
+        - test -f ${PREFIX}/lib/libfreetype.{{ so_name_major }}{{ SHLIB_EXT }}   # [osx]
+        - test -f ${PREFIX}/lib/libfreetype{{ SHLIB_EXT }}.{{ so_name_major }}   # [linux]
+        - test -f ${PREFIX}/lib/libfreetype{{ SHLIB_EXT }}.{{ so_name }}         # [linux]
+        - if not exist %PREFIX%\\Library\\bin\\freetype.dll exit 1               # [win]
+
+  # Clobber preventer for Windows; prevents multiple freetype.dll files from being
+  # installed simultaneously. This lets us avoid exporting a strict pin on the
+  # libfreetype API which is not strictly correlated with the ABI.
+  - name: _libfreetype_api
+    build:
+      skip: true  # [not win]
+    about:
+      summary: >
+        An empty package that prevents multiple ABIs of libdavid being installed simultaneously on Windows.
 
 about:
   home: https://www.freetype.org/
