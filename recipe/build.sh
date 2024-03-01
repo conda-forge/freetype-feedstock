@@ -23,4 +23,5 @@ make install
 # A pkg-config bug requires the Requires.private pc files to be
 # present even for shared build
 sed -i.bak '/^Requires\.private/d' $SRC_DIR/stage/lib/pkgconfig/freetype2.pc
-rm $SRC_DIR/stage/lib/pkgconfig/freetype2.pc.bak
+sed -i.bak "s,$SRC_DIR/stage,/opt/anaconda1anaconda2anaconda3,g" $SRC_DIR/stage/lib/pkgconfig/*.pc
+rm $SRC_DIR/stage/lib/pkgconfig/*.bak

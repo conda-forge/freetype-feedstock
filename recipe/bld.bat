@@ -42,3 +42,10 @@ move %SRC_DIR%\stage\include\freetype2\ft2build.h %SRC_DIR%\stage\include || exi
 :: vs2008 created libfreetype.dll instead of freetype.dll
 set LIB="%SRC_DIR%\stage\bin\libfreetype.dll"
 if exist %LIB% (copy %LIB% %SRC_DIR%\stage\bin\freetype.dll) || exit 1
+
+setlocal EnableExtensions ENABLEDELAYEDEXPANSION
+for %%f in ( "%SRC_DIR%\stage\lib\pkgconfig\*.pc" ) do (
+    sed -i.bak "s,prefix=.*,prefix=/opt/anaconda1anaconda2anaconda3/Library,g" %%f
+    del %%f.bak
+)
+endlocal
