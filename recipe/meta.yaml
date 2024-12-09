@@ -36,7 +36,16 @@ outputs:
 
   # Everything needed to build against libfreetype (scripts in bin are for build config)
   - name: freetype
-    script: install.py
+    files:
+      include:
+        - "**/*"
+      exclude:
+        - "bin/*.dll"  # [win]
+        # versioned libs
+        - "lib/lib*.*.dylib"  # [osx]
+        - "lib/lib*.so.*"  # [linux]
+        # static libs
+        - "lib/lib*.a"  # [unix]
     build:
       run_exports:
         - {{ pin_subpackage('libfreetype' ~ so_name_major) }}
@@ -66,7 +75,11 @@ outputs:
 
   # Only what's needed for run_exports downstream
   - name: libfreetype{{ so_name_major }}
-    script: install.py
+    files:
+      include:
+        - "bin/*.dll"  # [win]
+        - "lib/lib*.*.dylib"  # [osx]
+        - "lib/lib*.so.*"  # [linux]
     build:
       run_exports:
         - {{ pin_subpackage('libfreetype' ~ so_name_major) }}
