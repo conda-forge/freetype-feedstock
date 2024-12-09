@@ -91,6 +91,10 @@ outputs:
         - zlib
       run:
         - {{ pin_subpackage('_libfreetype_api', max_pin='x.x.x') }}              # [win]
+      # Pre-split versions of freetype don't know about libfreetypeX, so constrain
+      # them from being installed to prevent clobber.
+      run_constrained:
+        - {{ pin_subpackage('freetype', exact=True) }}
     test:
       commands:
       # Need these things
@@ -107,7 +111,7 @@ outputs:
       skip: true  # [not win]
     about:
       summary: >
-        An empty package that prevents multiple ABIs of libdavid being installed simultaneously on Windows.
+        An empty package that prevents multiple ABIs being installed simultaneously on Windows.
 
 about:
   home: https://www.freetype.org/
