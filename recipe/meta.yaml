@@ -36,7 +36,7 @@ outputs:
       include:
         - "**/*"
       exclude:
-        - "bin/*.dll"  # [win]
+        - "Library/bin/*.dll"  # [win]
         # versioned libs
         - "lib/lib*.*.dylib"  # [osx]
         - "lib/lib*.so.*"  # [linux]
@@ -74,7 +74,7 @@ outputs:
   - name: libfreetype{{ so_name_major }}
     files:
       include:
-        - "bin/*.dll"  # [win]
+        - "Library/bin/*.dll"  # [win]
         - "lib/lib*.*.dylib"  # [osx]
         - "lib/lib*.so.*"  # [linux]
     build:
