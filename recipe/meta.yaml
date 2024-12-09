@@ -24,6 +24,7 @@ requirements:
   build:
     - libtool  # [unix]
     - {{ compiler('c') }}
+    - {{ stdlib('c') }}
     - cmake  # [win]
     - make  # [not win]
     - ninja  # [win]
@@ -86,6 +87,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib('c') }}
       host:
         - libpng
         - zlib
