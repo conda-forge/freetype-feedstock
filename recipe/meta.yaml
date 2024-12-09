@@ -28,7 +28,6 @@ requirements:
     - cmake  # [win]
     - make  # [not win]
     - ninja  # [win]
-    - m2-sed  # [win]
   host:
     - libpng
     - zlib
