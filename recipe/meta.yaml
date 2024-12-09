@@ -15,10 +15,6 @@ source:
 
 build:
   number: 3
-  run_exports:
-    # has removed symbols at minor versions, but only very rarely.  Go with major.
-    #  https://abi-laboratory.pro/tracker/timeline/freetype/
-    - {{ pin_subpackage('freetype') }}
 
 requirements:
   build:
@@ -47,6 +43,7 @@ outputs:
         # static libs
         - "lib/lib*.a"  # [unix]
     build:
+      #  https://abi-laboratory.pro/tracker/timeline/freetype/
       run_exports:
         - {{ pin_subpackage('libfreetype' ~ so_name_major) }}
     requirements:
