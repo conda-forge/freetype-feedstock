@@ -29,7 +29,7 @@ About _libfreetype_api
 
 Package license: 
 
-Summary: An empty package that prevents multiple ABIs of libdavid being installed simultaneously on Windows.
+Summary: An empty package that prevents multiple ABIs being installed simultaneously on Windows.
 
 
 Current build status
