@@ -17,6 +17,7 @@ cmake -G"Ninja" ^
       -DCMAKE_DISABLE_FIND_PACKAGE_HarfBuzz=True ^
       -DFT_WITH_ZLIB=True ^
       -DFT_WITH_PNG=True ^
+      -DFT_WITH_BROTLI=False ^
       "%SRC_DIR:/=\\%"
 if errorlevel 1 exit 1
 

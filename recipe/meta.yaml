@@ -1,37 +1,124 @@
-{% set version = "2.12.1" %}
+{% set version = "2.13.0" %}
+# https://github.com/freetype/freetype/blob/master/docs/VERSIONS.TXT
+{% set so_name = "6.19.0" %}
+{% set so_name_major = so_name.split('.')[0] %}
 
 package:
-  name: freetype
+  name: freetype-split
   version: {{ version }}
 
 source:
   url: https://download.savannah.gnu.org/releases/freetype/freetype-{{ version }}.tar.gz
-  sha256: efe71fd4b8246f1b0b1b9bfca13cfff1c9ad85930340c27df469733bbb620938
-  patches:
-    - CVE-2022-37434.patch
+  sha256: a7aca0e532a276ea8d85bd31149f0a74c33d19c8d287116ef8f5f8357b4f1f80
 
 build:
-  number: 2
-  run_exports:
-    # has removed symbols at minor versions, but only very rarely.  Go with major.
-    #  https://abi-laboratory.pro/tracker/timeline/freetype/
-    - {{ pin_subpackage('freetype') }}
+  number: 0
 
 requirements:
   build:
     - libtool  # [unix]
     - {{ compiler('c') }}
+    - {{ stdlib('c') }}
     - cmake  # [win]
     - make  # [not win]
     - ninja  # [win]
+    - pkg-config
   host:
     - libpng
     - zlib
 
-test:
-  commands:
-    - ${PREFIX}/bin/freetype-config --version  # [not win]
-    - if exist %LIBRARY_BIN%\freetype.dll (exit 0) else (exit 1)  # [win]
+outputs:
+
+  # Everything needed to build against libfreetype (scripts in bin are for build config)
+  - name: freetype
+    files:
+      include:
+        - "**/*"
+      exclude:
+        - "Library/bin/*.dll"  # [win]
+        # versioned libs
+        - "lib/lib*.*.dylib"  # [osx]
+        - "lib/lib*.so.*"  # [linux]
+        # static libs
+        - "lib/lib*.a"  # [unix]
+    build:
+      #  https://abi-laboratory.pro/tracker/timeline/freetype/
+      run_exports:
+        - {{ pin_subpackage('libfreetype', max_pin=None) }}
+        - {{ pin_subpackage('libfreetype' ~ so_name_major, max_pin=None) }}
+    requirements:
+      host:
+        - {{ pin_subpackage('libfreetype', exact=True) }}
+        - {{ pin_subpackage('libfreetype' ~ so_name_major, exact=True) }}
+      run:
+        - {{ pin_subpackage('libfreetype', exact=True) }}
+        - {{ pin_subpackage('libfreetype' ~ so_name_major, exact=True) }}
+    test:
+      commands:
+        - ${PREFIX}/bin/freetype-config --version  # [not win]
+      # Need these things
+        - test -f ${PREFIX}/lib/libfreetype{{ SHLIB_EXT }}                       # [unix]
+        - test -f ${PREFIX}/lib/libfreetype.{{ so_name_major }}{{ SHLIB_EXT }}   # [osx]
+        - test -f ${PREFIX}/lib/libfreetype{{ SHLIB_EXT }}.{{ so_name_major }}   # [linux]
+        - test -f ${PREFIX}/lib/libfreetype{{ SHLIB_EXT }}.{{ so_name }}         # [linux]
+        - if not exist %PREFIX%\\Library\\lib\\freetype.lib exit 1               # [win]
+        - test -f ${PREFIX}/include/freetype2/freetype/freetype.h                # [unix]
+        - if not exist %PREFIX%\\Library\\include\\freetype\\freetype.h exit 1   # [win]
+        - test -f ${PREFIX}/lib/pkgconfig/freetype2.pc                            # [unix]
+        - if not exist %PREFIX%\\Library\\lib\\pkgconfig\\freetype2.pc exit 1     # [win]
+        - if not exist %PREFIX%\\Library\\lib\\cmake\\freetype\\freetype-config.cmake exit 1     # [win]
+        - test -f ${PREFIX}/bin/freetype-config                               # [unix]
+      # Exclude these things
+        - test ! -f ${PREFIX}/lib/libfreetype.a                               # [unix]
+
+  # Clobber preventer for Windows; co-install preventer for unix.
+  - name: libfreetype
+    requirements:
+      run:
+        - {{ pin_subpackage('libfreetype' ~ so_name_major, max_pin=None) }}
+    about:
+      license: GPL-2.0-only OR FTL
+      summary: The libfreetype runtime library.
+      description: >-
+        This is a runtime meta-package only. Developers should install freetype to build
+        with libfreetype.
+
+  # Only what's needed for run_exports downstream
+  - name: libfreetype{{ so_name_major }}
+    files:
+      include:
+        - "Library/bin/*.dll"  # [win]
+        - "lib/lib*.*.dylib"  # [osx]
+        - "lib/lib*.so.*"  # [linux]
+    requirements:
+      build:
+        - {{ compiler('c') }}
+        - {{ stdlib('c') }}
+      host:
+        - libpng
+        - zlib
+      run:
+        # Without this runtime dependency, it's possible to co-install two ABI versions of
+        # the library by manually specifying them. Probably don't want to explicitly
+        # prohibit this behavior, just discourage it.
+        # - libfreetype
+      # Pre-split versions of freetype don't know about libfreetypeX, so constrain
+      # them from being installed to prevent clobber.
+      run_constrained:
+        - {{ pin_subpackage('freetype', min_pin='2.13.0', max_pin=None) }}
+    test:
+      commands:
+      # Need these things
+        - test -f ${PREFIX}/lib/libfreetype.{{ so_name_major }}{{ SHLIB_EXT }}   # [osx]
+        - test -f ${PREFIX}/lib/libfreetype{{ SHLIB_EXT }}.{{ so_name_major }}   # [linux]
+        - test -f ${PREFIX}/lib/libfreetype{{ SHLIB_EXT }}.{{ so_name }}         # [linux]
+        - if not exist %PREFIX%\\Library\\bin\\freetype.dll exit 1               # [win]
+    about:
+      license: GPL-2.0-only OR FTL
+      summary: The libfreetype runtime library.
+      description: >-
+        This is a runtime package only. Developers should install freetype to build
+        with libfreetype.
 
 about:
   home: https://www.freetype.org/
@@ -40,7 +127,7 @@ about:
     - docs/GPLv2.TXT
     - docs/FTL.TXT
   summary: A Free, High-Quality, and Portable Font Engine
-  description: |
+  description: >-
     FreeType is designed to be small, efficient, highly customizable
     and portable while capable of producing high-quality output (glyph images)
     of most vector and bitmap font formats.
