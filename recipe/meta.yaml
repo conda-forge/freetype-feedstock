@@ -45,12 +45,15 @@ outputs:
     build:
       #  https://abi-laboratory.pro/tracker/timeline/freetype/
       run_exports:
-        - {{ pin_subpackage('libfreetype' ~ so_name_major) }}
+        - {{ pin_subpackage('libfreetype', max_pin=None) }}
+        - {{ pin_subpackage('libfreetype' ~ so_name_major, max_pin=None) }}
     requirements:
       host:
-        - {{ pin_subpackage('libfreetype' ~ so_name_major, exact=True) }}        # [unix]
+        - {{ pin_subpackage('libfreetype', exact=True) }}
+        - {{ pin_subpackage('libfreetype' ~ so_name_major, exact=True) }}
       run:
-        - {{ pin_subpackage('libfreetype' ~ so_name_major, exact=True) }}        # [unix]
+        - {{ pin_subpackage('libfreetype', exact=True) }}
+        - {{ pin_subpackage('libfreetype' ~ so_name_major, exact=True) }}
     test:
       commands:
         - ${PREFIX}/bin/freetype-config --version  # [not win]
@@ -70,6 +73,18 @@ outputs:
         - test ! -f ${PREFIX}/lib/libfreetype.a                               # [unix]
         - if exist %PREFIX%\\Library\\bin\\freetype.dll exit 1                # [win]
 
+  # Clobber preventer for Windows; co-install preventer for unix.
+  - name: libfreetype
+    requirements:
+      run:
+        - {{ pin_subpackage('libfreetype' ~ so_name_major, max_pin=None) }}
+    about:
+      license: GPL-2.0-only OR FTL
+      summary: The libfreetype runtime library.
+      description: >-
+        This is a runtime meta-package only. Developers should install freetype to build
+        with libfreetype.
+
   # Only what's needed for run_exports downstream
   - name: libfreetype{{ so_name_major }}
     files:
@@ -77,9 +92,6 @@ outputs:
         - "Library/bin/*.dll"  # [win]
         - "lib/lib*.*.dylib"  # [osx]
         - "lib/lib*.so.*"  # [linux]
-    build:
-      run_exports:
-        - {{ pin_subpackage('libfreetype' ~ so_name_major) }}
     requirements:
       build:
         - {{ compiler('c') }}
@@ -88,11 +100,14 @@ outputs:
         - libpng
         - zlib
       run:
-        - {{ pin_subpackage('_libfreetype_api', max_pin='x.x.x') }}              # [win]
+        # Without this runtime dependency, it's possible to co-install two ABI versions of
+        # the library by manually specifying them. Probably don't want to explicitly
+        # prohibit this behavior, just discourage it.
+        # - libfreetype
       # Pre-split versions of freetype don't know about libfreetypeX, so constrain
       # them from being installed to prevent clobber.
       run_constrained:
-        - {{ pin_subpackage('freetype', min_pin='x.x.x') }}
+        - {{ pin_subpackage('freetype', min_pin='2.12.1', max_pin=None) }}
     test:
       commands:
       # Need these things
@@ -100,16 +115,12 @@ outputs:
         - test -f ${PREFIX}/lib/libfreetype{{ SHLIB_EXT }}.{{ so_name_major }}   # [linux]
         - test -f ${PREFIX}/lib/libfreetype{{ SHLIB_EXT }}.{{ so_name }}         # [linux]
         - if not exist %PREFIX%\\Library\\bin\\freetype.dll exit 1               # [win]
-
-  # Clobber preventer for Windows; prevents multiple freetype.dll files from being
-  # installed simultaneously. This lets us avoid exporting a strict pin on the
-  # libfreetype API which is not strictly correlated with the ABI.
-  - name: _libfreetype_api
-    build:
-      skip: true  # [not win]
     about:
-      summary: >
-        An empty package that prevents multiple ABIs being installed simultaneously on Windows.
+      license: GPL-2.0-only OR FTL
+      summary: The libfreetype runtime library.
+      description: >-
+        This is a runtime package only. Developers should install freetype to build
+        with libfreetype.
 
 about:
   home: https://www.freetype.org/
@@ -118,7 +129,7 @@ about:
     - docs/GPLv2.TXT
     - docs/FTL.TXT
   summary: A Free, High-Quality, and Portable Font Engine
-  description: |
+  description: >-
     FreeType is designed to be small, efficient, highly customizable
     and portable while capable of producing high-quality output (glyph images)
     of most vector and bitmap font formats.
