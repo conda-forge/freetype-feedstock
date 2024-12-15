@@ -17,20 +17,29 @@ Development: http://git.savannah.gnu.org/cgit/freetype/
 
 Documentation: http://freetype.sourceforge.net/freetype2/documentation.html
 
-FreeType is designed to be small, efficient, highly customizable
-and portable while capable of producing high-quality output (glyph images)
-of most vector and bitmap font formats.
+FreeType is designed to be small, efficient, highly customizable and portable while capable of producing high-quality output (glyph images) of most vector and bitmap font formats.
 
-
-About _libfreetype_api
-----------------------
+About libfreetype6
+------------------
 
 
 
-Package license: 
+Package license: GPL-2.0-only OR FTL
 
-Summary: An empty package that prevents multiple ABIs being installed simultaneously on Windows.
+Summary: The libfreetype runtime library.
 
+This is a runtime package only. Developers should install freetype to build with libfreetype.
+
+About libfreetype
+-----------------
+
+
+
+Package license: GPL-2.0-only OR FTL
+
+Summary: The libfreetype runtime library.
+
+This is a runtime meta-package only. Developers should install freetype to build with libfreetype.
 
 Current build status
 ====================
@@ -104,8 +113,8 @@ Current release info
 
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
-| [![Conda Recipe](https://img.shields.io/badge/recipe-_libfreetype_api-green.svg)](https://anaconda.org/conda-forge/_libfreetype_api) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/_libfreetype_api.svg)](https://anaconda.org/conda-forge/_libfreetype_api) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/_libfreetype_api.svg)](https://anaconda.org/conda-forge/_libfreetype_api) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/_libfreetype_api.svg)](https://anaconda.org/conda-forge/_libfreetype_api) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-freetype-green.svg)](https://anaconda.org/conda-forge/freetype) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/freetype.svg)](https://anaconda.org/conda-forge/freetype) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/freetype.svg)](https://anaconda.org/conda-forge/freetype) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/freetype.svg)](https://anaconda.org/conda-forge/freetype) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-libfreetype-green.svg)](https://anaconda.org/conda-forge/libfreetype) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/libfreetype.svg)](https://anaconda.org/conda-forge/libfreetype) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/libfreetype.svg)](https://anaconda.org/conda-forge/libfreetype) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/libfreetype.svg)](https://anaconda.org/conda-forge/libfreetype) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-libfreetype6-green.svg)](https://anaconda.org/conda-forge/libfreetype6) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/libfreetype6.svg)](https://anaconda.org/conda-forge/libfreetype6) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/libfreetype6.svg)](https://anaconda.org/conda-forge/libfreetype6) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/libfreetype6.svg)](https://anaconda.org/conda-forge/libfreetype6) |
 
 Installing freetype-split
@@ -118,41 +127,41 @@ conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `_libfreetype_api, freetype, libfreetype6` can be installed with `conda`:
+Once the `conda-forge` channel has been enabled, `freetype, libfreetype, libfreetype6` can be installed with `conda`:
 
 ```
-conda install _libfreetype_api freetype libfreetype6
-```
-
-or with `mamba`:
-
-```
-mamba install _libfreetype_api freetype libfreetype6
-```
-
-It is possible to list all of the versions of `_libfreetype_api` available on your platform with `conda`:
-
-```
-conda search _libfreetype_api --channel conda-forge
+conda install freetype libfreetype libfreetype6
 ```
 
 or with `mamba`:
 
 ```
-mamba search _libfreetype_api --channel conda-forge
+mamba install freetype libfreetype libfreetype6
+```
+
+It is possible to list all of the versions of `freetype` available on your platform with `conda`:
+
+```
+conda search freetype --channel conda-forge
+```
+
+or with `mamba`:
+
+```
+mamba search freetype --channel conda-forge
 ```
 
 Alternatively, `mamba repoquery` may provide more information:
 
 ```
 # Search all versions available on your platform:
-mamba repoquery search _libfreetype_api --channel conda-forge
+mamba repoquery search freetype --channel conda-forge
 
-# List packages depending on `_libfreetype_api`:
-mamba repoquery whoneeds _libfreetype_api --channel conda-forge
+# List packages depending on `freetype`:
+mamba repoquery whoneeds freetype --channel conda-forge
 
-# List dependencies of `_libfreetype_api`:
-mamba repoquery depends _libfreetype_api --channel conda-forge
+# List dependencies of `freetype`:
+mamba repoquery depends freetype --channel conda-forge
 ```
 
 
