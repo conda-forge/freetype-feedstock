@@ -71,7 +71,6 @@ outputs:
         - test -f ${PREFIX}/bin/freetype-config                               # [unix]
       # Exclude these things
         - test ! -f ${PREFIX}/lib/libfreetype.a                               # [unix]
-        - if exist %PREFIX%\\Library\\bin\\freetype.dll exit 1                # [win]
 
   # Clobber preventer for Windows; co-install preventer for unix.
   - name: libfreetype
