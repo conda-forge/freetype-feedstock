@@ -11,7 +11,7 @@ source:
     - CVE-2022-37434.patch
 
 build:
-  number: 2
+  number: 3
   run_exports:
     # has removed symbols at minor versions, but only very rarely.  Go with major.
     #  https://abi-laboratory.pro/tracker/timeline/freetype/

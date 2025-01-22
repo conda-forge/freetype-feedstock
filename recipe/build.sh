@@ -11,6 +11,10 @@ cp $BUILD_PREFIX/share/libtool/build-aux/config.* ./builds/unix
 
 make -j${CPU_COUNT} ${VERBOSE_AT}
 if [[ "${CONDA_BUILD_CROSS_COMPILATION}" != "1" ]]; then
-make check
+    make check
 fi
 make install
+
+# Use conda pkg-config
+sed -i.bak "s,/usr/bin/,$PREFIX/bin/,g" $PREFIX/bin/freetype-config
+rm $PREFIX/bin/freetype-config.bak
