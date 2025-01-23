@@ -21,9 +21,11 @@ requirements:
   build:
     - libtool  # [unix]
     - {{ compiler('c') }}
+    - {{ stdlib('c') }}
     - cmake  # [win]
     - make  # [not win]
     - ninja  # [win]
+    - pkg-config
   host:
     - libpng
     - zlib
