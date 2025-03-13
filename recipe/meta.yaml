@@ -17,12 +17,13 @@ build:
 
 requirements:
   build:
-    - libtool  # [unix]
-    - {{ compiler('c') }}
+    - {{ compiler("c") }}
     - {{ stdlib("c") }}
-    - cmake  # [win]
-    - make  # [not win]
-    - ninja  # [win]
+    - cmake                # [win]
+    - make                 # [not win]
+    - ninja                # [win]
+    - pkg-config           # [unix]
+    - libtool              # [unix]
   host:
     - libpng
     - zlib
