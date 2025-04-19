@@ -1,6 +1,6 @@
-{% set version = "2.13.0" %}
+{% set version = "2.13.3" %}
 # https://github.com/freetype/freetype/blob/master/docs/VERSIONS.TXT
-{% set so_name = "6.19.0" %}
+{% set so_name = "6.20.2" %}
 {% set so_name_major = so_name.split('.')[0] %}
 
 package:
@@ -9,20 +9,20 @@ package:
 
 source:
   url: https://download.savannah.gnu.org/releases/freetype/freetype-{{ version }}.tar.gz
-  sha256: a7aca0e532a276ea8d85bd31149f0a74c33d19c8d287116ef8f5f8357b4f1f80
+  sha256: 5c3a8e78f7b24c20b25b54ee575d6daa40007a5f4eea2845861c3409b3021747
 
 build:
   number: 0
 
 requirements:
   build:
-    - libtool  # [unix]
-    - {{ compiler('c') }}
-    - {{ stdlib('c') }}
-    - cmake  # [win]
-    - make  # [not win]
-    - ninja  # [win]
-    - pkg-config
+    - {{ compiler("c") }}
+    - {{ stdlib("c") }}
+    - cmake                # [win]
+    - make                 # [not win]
+    - ninja                # [win]
+    - pkg-config           # [unix]
+    - libtool              # [unix]
   host:
     - libpng
     - zlib
