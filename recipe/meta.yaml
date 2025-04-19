@@ -12,7 +12,7 @@ source:
   sha256: 5c3a8e78f7b24c20b25b54ee575d6daa40007a5f4eea2845861c3409b3021747
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
@@ -71,7 +71,6 @@ outputs:
       # Exclude these things
         - test ! -f ${PREFIX}/lib/libfreetype.a                               # [unix]
 
-  # Clobber preventer for Windows; co-install preventer for unix.
   - name: libfreetype
     requirements:
       run:
@@ -98,14 +97,10 @@ outputs:
         - libpng
         - zlib
       run:
-        # Without this runtime dependency, it's possible to co-install two ABI versions of
-        # the library by manually specifying them. Probably don't want to explicitly
-        # prohibit this behavior, just discourage it.
-        # - libfreetype
       # Pre-split versions of freetype don't know about libfreetypeX, so constrain
       # them from being installed to prevent clobber.
       run_constrained:
-        - {{ pin_subpackage('freetype', min_pin='2.13.0', max_pin=None) }}
+        - {{ pin_subpackage('freetype', min_pin='2.13.3', max_pin=None) }}
     test:
       commands:
       # Need these things
