@@ -19,17 +19,6 @@ Documentation: http://freetype.sourceforge.net/freetype2/documentation.html
 
 FreeType is designed to be small, efficient, highly customizable and portable while capable of producing high-quality output (glyph images) of most vector and bitmap font formats.
 
-About libfreetype6
-------------------
-
-
-
-Package license: GPL-2.0-only OR FTL
-
-Summary: The libfreetype runtime library.
-
-This is a runtime package only. Developers should install freetype to build with libfreetype.
-
 About libfreetype
 -----------------
 
@@ -40,6 +29,17 @@ Package license: GPL-2.0-only OR FTL
 Summary: The libfreetype runtime library.
 
 This is a runtime meta-package only. Developers should install freetype to build with libfreetype.
+
+About libfreetype6
+------------------
+
+
+
+Package license: GPL-2.0-only OR FTL
+
+Summary: The libfreetype runtime library.
+
+This is a runtime package only. Developers should install freetype to build with libfreetype.
 
 Current build status
 ====================
@@ -231,6 +231,7 @@ In order to produce a uniquely identifiable distribution:
 Feedstock Maintainers
 =====================
 
+* [@carterbox](https://github.com/carterbox/)
 * [@ccordoba12](https://github.com/ccordoba12/)
 * [@msarahan](https://github.com/msarahan/)
 * [@ocefpaf](https://github.com/ocefpaf/)
