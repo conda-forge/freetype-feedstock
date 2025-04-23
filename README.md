@@ -1,7 +1,11 @@
-About freetype-feedstock
-========================
+About freetype-split-feedstock
+==============================
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/freetype-feedstock/blob/main/LICENSE.txt)
+
+
+About freetype-split
+--------------------
 
 Home: https://www.freetype.org/
 
@@ -13,10 +17,29 @@ Development: http://git.savannah.gnu.org/cgit/freetype/
 
 Documentation: http://freetype.sourceforge.net/freetype2/documentation.html
 
-FreeType is designed to be small, efficient, highly customizable
-and portable while capable of producing high-quality output (glyph images)
-of most vector and bitmap font formats.
+FreeType is designed to be small, efficient, highly customizable and portable while capable of producing high-quality output (glyph images) of most vector and bitmap font formats.
 
+About libfreetype
+-----------------
+
+
+
+Package license: GPL-2.0-only OR FTL
+
+Summary: The libfreetype runtime library.
+
+This is a runtime meta-package only. Developers should install freetype to build with libfreetype.
+
+About libfreetype6
+------------------
+
+
+
+Package license: GPL-2.0-only OR FTL
+
+Summary: The libfreetype runtime library.
+
+This is a runtime package only. Developers should install freetype to build with libfreetype.
 
 Current build status
 ====================
@@ -91,27 +114,29 @@ Current release info
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-freetype-green.svg)](https://anaconda.org/conda-forge/freetype) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/freetype.svg)](https://anaconda.org/conda-forge/freetype) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/freetype.svg)](https://anaconda.org/conda-forge/freetype) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/freetype.svg)](https://anaconda.org/conda-forge/freetype) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-libfreetype-green.svg)](https://anaconda.org/conda-forge/libfreetype) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/libfreetype.svg)](https://anaconda.org/conda-forge/libfreetype) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/libfreetype.svg)](https://anaconda.org/conda-forge/libfreetype) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/libfreetype.svg)](https://anaconda.org/conda-forge/libfreetype) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-libfreetype6-green.svg)](https://anaconda.org/conda-forge/libfreetype6) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/libfreetype6.svg)](https://anaconda.org/conda-forge/libfreetype6) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/libfreetype6.svg)](https://anaconda.org/conda-forge/libfreetype6) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/libfreetype6.svg)](https://anaconda.org/conda-forge/libfreetype6) |
 
-Installing freetype
-===================
+Installing freetype-split
+=========================
 
-Installing `freetype` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
+Installing `freetype-split` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
 
 ```
 conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `freetype` can be installed with `conda`:
+Once the `conda-forge` channel has been enabled, `freetype, libfreetype, libfreetype6` can be installed with `conda`:
 
 ```
-conda install freetype
+conda install freetype libfreetype libfreetype6
 ```
 
 or with `mamba`:
 
 ```
-mamba install freetype
+mamba install freetype libfreetype libfreetype6
 ```
 
 It is possible to list all of the versions of `freetype` available on your platform with `conda`:
@@ -181,17 +206,17 @@ Terminology
                   produce the finished article (built conda distributions)
 
 
-Updating freetype-feedstock
-===========================
+Updating freetype-split-feedstock
+=================================
 
-If you would like to improve the freetype recipe or build a new
+If you would like to improve the freetype-split recipe or build a new
 package version, please fork this repository and submit a PR. Upon submission,
 your changes will be run on the appropriate platforms to give the reviewer an
 opportunity to confirm that the changes result in a successful build. Once
 merged, the recipe will be re-built and uploaded automatically to the
 `conda-forge` channel, whereupon the built conda packages will be available for
 everybody to install and use from the `conda-forge` channel.
-Note that all branches in the conda-forge/freetype-feedstock are
+Note that all branches in the conda-forge/freetype-split-feedstock are
 immediately built and any created packages are uploaded, so PRs should be based
 on branches in forks and branches in the main repository should only be used to
 build distinct package versions.
@@ -206,6 +231,7 @@ In order to produce a uniquely identifiable distribution:
 Feedstock Maintainers
 =====================
 
+* [@carterbox](https://github.com/carterbox/)
 * [@ccordoba12](https://github.com/ccordoba12/)
 * [@msarahan](https://github.com/msarahan/)
 * [@ocefpaf](https://github.com/ocefpaf/)
