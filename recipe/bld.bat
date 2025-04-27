@@ -5,7 +5,7 @@ mkdir build
 cd build
 
 :: Configure.
-cmake -G"Ninja" ^
+cmake %CMAKE_ARGS% -G"Ninja" ^
       -DCMAKE_INSTALL_PREFIX:PATH="%LIBRARY_PREFIX:/=\\%" ^
       -DCMAKE_BUILD_TYPE=Release ^
       -DCMAKE_PREFIX_PATH="%LIBRARY_PREFIX%:/=\\" ^
@@ -26,7 +26,9 @@ ninja install
 if errorlevel 1 exit 1
 
 :: Test.
+if not %CONDA_BUILD_SKIP_TESTS%==1 (
 ctest -C Release
+)
 if errorlevel 1 exit 1
 
 :: Install.
