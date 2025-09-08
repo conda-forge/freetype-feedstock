@@ -1,4 +1,4 @@
-{% set version = "2.13.3" %}
+{% set version = "2.14.0" %}
 # https://github.com/freetype/freetype/blob/master/docs/VERSIONS.TXT
 {% set so_name = "6.20.2" %}
 {% set so_name_major = so_name.split('.')[0] %}
@@ -9,10 +9,10 @@ package:
 
 source:
   url: https://download.savannah.gnu.org/releases/freetype/freetype-{{ version }}.tar.gz
-  sha256: 5c3a8e78f7b24c20b25b54ee575d6daa40007a5f4eea2845861c3409b3021747
+  sha256: 73819bbf34c84f18b89ebbd35107d3ae92c604ff7336cd09ff1452930c2dcb9c
 
 build:
-  number: 1
+  number: 0
 
 requirements:
   build:
@@ -79,8 +79,7 @@ outputs:
       license: GPL-2.0-only OR FTL
       summary: The libfreetype runtime library.
       description: >-
-        This is a runtime meta-package only. Developers should install freetype to build
-        with libfreetype.
+        This is a runtime meta-package only. Developers should install freetype to build with libfreetype.
 
   # Only what's needed for run_exports downstream
   - name: libfreetype{{ so_name_major }}
@@ -112,8 +111,7 @@ outputs:
       license: GPL-2.0-only OR FTL
       summary: The libfreetype runtime library.
       description: >-
-        This is a runtime package only. Developers should install freetype to build
-        with libfreetype.
+        This is a runtime package only. Developers should install freetype to build with libfreetype.
 
 about:
   home: https://www.freetype.org/
@@ -123,9 +121,7 @@ about:
     - docs/FTL.TXT
   summary: A Free, High-Quality, and Portable Font Engine
   description: >-
-    FreeType is designed to be small, efficient, highly customizable
-    and portable while capable of producing high-quality output (glyph images)
-    of most vector and bitmap font formats.
+    FreeType is designed to be small, efficient, highly customizable and portable while capable of producing high-quality output (glyph images) of most vector and bitmap font formats.
   doc_url: http://freetype.sourceforge.net/freetype2/documentation.html
   doc_source_url: https://sourceforge.net/projects/freetype/?source=navbar
   dev_url: http://git.savannah.gnu.org/cgit/freetype/
