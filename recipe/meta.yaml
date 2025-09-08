@@ -1,6 +1,6 @@
 {% set version = "2.14.0" %}
 # https://github.com/freetype/freetype/blob/master/docs/VERSIONS.TXT
-{% set so_name = "6.20.2" %}
+{% set so_name = "6.20.3" %}
 {% set so_name_major = so_name.split('.')[0] %}
 
 package:
