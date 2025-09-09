@@ -12,7 +12,7 @@ source:
   sha256: 73819bbf34c84f18b89ebbd35107d3ae92c604ff7336cd09ff1452930c2dcb9c
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
@@ -21,7 +21,7 @@ requirements:
     - cmake                # [win]
     - make                 # [not win]
     - ninja                # [win]
-    - pkg-config           # [unix]
+    - pkg-config
     - libtool              # [unix]
   host:
     - libpng

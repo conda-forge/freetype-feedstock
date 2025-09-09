@@ -20,7 +20,7 @@ cmake %CMAKE_ARGS% -G"Ninja" ^
 if errorlevel 1 exit 1
 
 :: Build.
-ninja install
+cmake --build . --config Release
 if errorlevel 1 exit 1
 
 :: Test.
@@ -30,7 +30,7 @@ if not "%CONDA_BUILD_SKIP_TESTS%"=="1" (
 if errorlevel 1 exit 1
 
 :: Install.
-cmake --build . --config Release --target install
+cmake --install .
 if errorlevel 1 exit 1
 
 :: Move everything 1-level down.
