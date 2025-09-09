@@ -11,18 +11,16 @@ cmake %CMAKE_ARGS% -G"Ninja" ^
       -DCMAKE_PREFIX_PATH="%LIBRARY_PREFIX%:/=\\" ^
       -DCMAKE_SYSTEM_PREFIX_PATH="%LIBRARY_PREFIX:/=\\%" ^
       -DBUILD_SHARED_LIBS:BOOL=true ^
-      -DFT_WITH_BZIP2=False ^
-      -DFT_WITH_HARFBUZZ=False ^
-      -DCMAKE_DISABLE_FIND_PACKAGE_BZip2=True ^
-      -DCMAKE_DISABLE_FIND_PACKAGE_HarfBuzz=True ^
-      -DFT_WITH_ZLIB=True ^
-      -DFT_WITH_PNG=True ^
-      -DFT_WITH_BROTLI=False ^
+      -DFT_DISABLE_BZIP2=TRUE ^
+      -DFT_DISABLE_HARFBUZZ=TRUE ^
+      -DFT_DISABLE_ZLIB=FALSE ^
+      -DFT_DISABLE_PNG=FALSE ^
+      -DFT_DISABLE_BROTLI=TRUE ^
       "%SRC_DIR:/=\\%"
 if errorlevel 1 exit 1
 
 :: Build.
-ninja install
+cmake --build . --config Release
 if errorlevel 1 exit 1
 
 :: Test.
@@ -32,7 +30,7 @@ if not "%CONDA_BUILD_SKIP_TESTS%"=="1" (
 if errorlevel 1 exit 1
 
 :: Install.
-cmake --build . --config Release --target install
+cmake --install .
 if errorlevel 1 exit 1
 
 :: Move everything 1-level down.
