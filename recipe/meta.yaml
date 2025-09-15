@@ -1,6 +1,6 @@
-{% set version = "2.14.0" %}
+{% set version = "2.14.1" %}
 # https://github.com/freetype/freetype/blob/master/docs/VERSIONS.TXT
-{% set so_name = "6.20.3" %}
+{% set so_name = "6.20.4" %}
 {% set so_name_major = so_name.split('.')[0] %}
 
 package:
@@ -9,10 +9,10 @@ package:
 
 source:
   url: https://download.savannah.gnu.org/releases/freetype/freetype-{{ version }}.tar.gz
-  sha256: 73819bbf34c84f18b89ebbd35107d3ae92c604ff7336cd09ff1452930c2dcb9c
+  sha256: 174d9e53402e1bf9ec7277e22ec199ba3e55a6be2c0740cb18c0ee9850fc8c34
 
 build:
-  number: 1
+  number: 0
 
 requirements:
   build:
